@@ -114,3 +114,4 @@ spring.flyway.enabled=true
 V{バージョン番号}__{任意の名前}.sql
 ```
 
+[初期テーブル](初期設定テーブル.PNG)
