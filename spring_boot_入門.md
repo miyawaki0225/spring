@@ -49,3 +49,18 @@ WAF はプロダクトによってそれぞれ書き方やクラスの呼び名�
 
 ### 初期設定
 ![spring tool](spring tool初期設定.PNG)
+
+- SQL
+  - JDBC：データベースを操作する
+  - MyBatis：OR マッパー（後述）
+  - PostgreSQL：PostgreSQL に接続するため
+  - Flyway：マイグレーション（後述）
+- Template Engines
+  - Thymeleaf：テンプレートエンジン（後述）
+- Web
+  - Web：ルーティングなど Web アプリの基本機能
+
+### コントローラークラス
+1. クラスに「@Controller」を付ける。
+2. メソッドに「@GetMapping」「@PostMapping」を付けて リクエスト URL + HTTP メソッドを紐付ける。
+というのが Spring におけるルーティングのパターンです。
