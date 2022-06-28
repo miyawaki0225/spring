@@ -1,5 +1,8 @@
-# SpringBoot入門
+## SpringBoot入門
 https://masahiroharada.github.io/spring-boot-primer/#%E7%9B%AE%E7%9A%84%E3%83%BB%E5%AF%BE%E8%B1%A1
+
+## Tymeleafチートシート
+https://qiita.com/NagaokaKenichi/items/c6d1b76090ef5ef39482
 
 # Postgresql
 [説明書](https://www.postgresql.jp/document/13/html/index.html)
@@ -302,3 +305,25 @@ model.addAttribute("data",numbers);
 </p>
 ```
 
+練習用コントローラー
+```java:Controller
+@Controller
+public class CodePracticeController {
+	@GetMapping("/code_practice")
+	public String index(Model model) {
+		String[] array = {"one","two","three"};
+		model.addAttribute("array",array);
+		return "code_practice";
+	}
+}
+```
+
+上記を表示する
+```html:CodePractice.html
+<body>
+	<p th:each="moji:${array}">
+		<span th:text="${moji}"></span>
+	</p>
+</body>
+```
+※$を付けないと`moji`が繰り返し記載される。
