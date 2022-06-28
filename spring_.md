@@ -1,7 +1,7 @@
 [spring リファレンス](https://spring.pleiades.io/spring-boot/docs/current/reference/html)
 
-## Beans
-
+## Beans  
+ 
 >Bean は、Spring によって管理されるクラスのオブジェクトです。従来、オブジェクトは独自の依存関係を作成するために使用されていましたが、
 >Springはオブジェクトのすべての依存関係を管理し、必要な依存関係を挿入した後にオブジェクトをインスタンス化します。
 >@Componentアノテーションは、Bean を定義する最も一般的な方法です。
@@ -74,3 +74,32 @@ class Vehicle{
 
 ## Application context
 >アプリケーション・コンテキストは、エンタープライズ・アプリケーションで通常必要とされるより多くの機能を Bean ファクトリーに追加します。これは、Springフレームワークの最も重要な部分です。Springのすべてのコアロジックはここで起こります。これには、Bean ファクトリーによって提供される Bean の基本的な管理と依存関係の配線が含まれます。アプリケーションコンテキストの追加機能には、Spring AOP機能、国際化、Webアプリケーションコンテキストなどが含まれます。
+
+
+【依存関係で指定したモジュールについて】  
+- Spring Boot DevTools・・・Spring Bootの開発ツールです。Javaコード、HTMLファイル、プロパティファイルなどの修正を検知して実行中のアプリに即時反映（ホットデプロイ）してくれるなど、開発に便利なツールが含まれています。
+- Thymeleaf（タイムリーフ）・・・Spring Bootで標準的に使われるHTMLのテンプレートエンジンです。※Spring BootではJSPの使用は非推奨となっています。
+- Spring Web・・・Spring MVCを使ったWebアプリケーションが作成可能となります。
+- Lombok（ロンボック）・・・定型コード記述の省力化に役立つJavaアノテーションライブラリです。
+ 
+【作成したプロジェクト内のファイルについて（下記イメージ参照）】  
+- SpringMvc1Application.java・・・mainメソッドが宣言されているクラスです。
+- SpringBootの起動はこのクラスから行います。@SpringBootApplicationアノテーションが定義されています。
+- application.properties・・・Spring Bootのプロパティファイルです。
+- pom.xml・・・Mavenの設定ファイルです。Mavenは、Javaプログラムをビルドするためのツールです。様々な機能がありますが、特に便利な機能は、アプリケーションが利用するライブラリの自動取得です。
+
+```java
+@Controller・・・このクラスをコントローラとして機能させる場合に指定します。
+@GetMapping・・・アノテーション付与によりHTTPのGETリクエストを受け付けます。ここでは"http://localhost:8080/form"のGETリクエストを受け付けます。
+@PostMapping・・・アノテーション付与によりHTTPのPOSTリクエストを受け付けます。ここでは"http://localhost:8080/form"のPOSTリクエストを受け付けます。
+@ModelAttribute・・・モデル属性にバインドします。バインドとは、日本語で「結び付ける」「関連付ける」などの意味です。ここでは、入力画面の「氏名」が<input type="text" name="name">の場合、リクエストを受け付けたタイミングでSpringが自動でUserクラスのnameプロパティに画面入力値を設定してくれます。これは、データバインディングと呼ばれ、パラメータ取得コードの記述が不要となります。
+ ```
+ 
+ ```java
+//<html xmlns:th="http://www.thymeleaf.org">・・・この宣言により、Thymeleafのタグが利用可能となる。
+//th:action・・・フォームのPOST先を、@{パス名} で指定します。@{...}はリンクURL式、${...}は変数式といいます。
+//th:object・・・フォームにバインドするオブジェクトを設定します。今回はコントローラ側で用意した"user"オブジェクトを設定しています。*{フィールド名}は選択変数式で、th:objectが付いたタグ内では、オブジェクト名の記述を省略できます。th:objectを使用しない場合、<input type="number" th:field="${user.age}">のように&{オブジェクト名.フィールド名}を指定する必要があります。
+//th:field・・・フィールドを設定します。これは、<input>タグのid・name・value属性をHTMLに出力する機能です。
+//<input type="text" th:field="*{name}">の記述は、<input type="text" id="name" name="name" value="">と出力されます。
+//th:inline="text"・・・タグ内のテキストを展開します。[[ ]]で囲むと、その値を表示できます。
+ ```
